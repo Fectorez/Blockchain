@@ -1,5 +1,5 @@
 pragma solidity ^0.5.8;
-//pragma experimental ABIEncoderV2;
+pragma experimental ABIEncoderV2;
 
 contract PropertyFactory {
 
@@ -15,7 +15,6 @@ contract PropertyFactory {
     }
 
     Property[] public properties;
-    //Property[] tmpProperties;
 
     mapping (uint => address payable) public propertyToOwner;
     mapping (address => uint) ownerPropertyCount;
@@ -39,19 +38,9 @@ contract PropertyFactory {
         properties[_propertyId].selling = false; // plus en vente
     }
 
-    // nb total properties
-    function getNbProperties() external view returns (uint256) {
-        return properties.length;
-    }
-
     // propr. de sender ?
     function isMyProperty(uint256 _propertyId) external view returns (bool) {
         return propertyToOwner[_propertyId] == msg.sender;
-    }
-
-    // est en selling
-    function isAvailable(uint256 _propertyId) external view returns (bool) {
-        return properties[_propertyId].selling;
     }
 
     // tous les ID des properties de <_owner>
@@ -67,28 +56,22 @@ contract PropertyFactory {
         return result;
     }
 
-    // toutes les properties
-    /*function getMyProperties() external returns (Property[] memory) {
-        Property[] memory tmpAvailableHouses;
-        tmpProperties = tmpAvailableHouses;
+    // propr. en vente
+    function getAvailableProperties() external view returns (Property[] memory) {
+        Property[] memory availableProperties;
+
+		uint j = 0;
+        
         for ( uint i = 0 ; i < properties.length ; i++ ) {
-            if ( propertyToOwner[i] == msg.sender) {
-                tmpProperties.push(properties[i]);
+            if (availableProperties[i].selling) {
+                availableProperties[j] = properties[i];
+				j++;
             }
         }
-        return tmpProperties;
+        return availableProperties;
     }
 
-    // propr. en vente
-    function getAvailableHouses() external returns (Property[] memory) {
-        Property[] memory tmpAvailableHouses;
-        tmpProperties = tmpAvailableHouses;
-        for ( uint i = 0 ; i < properties.length ; i++ ) {
-            if ( properties[i].selling && propertyToOwner[i] != msg.sender) {
-                tmpProperties.push(properties[i]);
-            }
-        }
-        return tmpProperties;
-    }*/
-
+	function clearAllProperties() external {
+		delete properties;
+	}
 }
