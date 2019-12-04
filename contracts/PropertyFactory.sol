@@ -56,8 +56,12 @@ contract PropertyFactory {
         return result;
     }
 
+    function getNbProperties() external view returns (uint) {
+        return properties.length;
+    }
+
     // propr. en vente
-    function getAvailableProperties() external view returns (Property[] memory) {
+    /*function getAvailableProperties() external view returns (Property[] memory) {
         Property[] memory availableProperties;
 
 		uint j = 0;
@@ -69,7 +73,7 @@ contract PropertyFactory {
             }
         }
         return availableProperties;
-    }
+    }*/
 
 	function clearAllProperties() external {
 		delete properties;

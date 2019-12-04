@@ -14,20 +14,27 @@ contract('PropertyFactory', async function(accounts) {
 		await instance.clearAllProperties();
 	});
 
-	it('Count of properties should be 0', async () => {
+	/*it('Count of properties should be 0', async () => {
 		const properties = await instance.properties.call();
 		console.log(properties);
 
 		assert.equal(properties.length, 0);
-	});
+	});*/
 	
-	it('Post, Count of properties should be 1', async () => {
-		await instance.post(a1[0], a1[1], a1[2], a1[3], a1[4], a1[5]);
+	it('Post, result should be equal than posted info', async () => {
+		await instance.post(1, 20, "20 rue Montorgueil", "un petit appartement", 'Attestation sécurité, ...', 2);
 
-		const properties = await instance.getProperties();
-		console.log(properties);
+		var res = await instance.properties.call(0);
 
-		//assert.equal(properties.length, 1);
+		assert.equal(res['price'], 1);
+		assert.equal(res['size'], 20);
+		assert.equal(res['geoAddress'], '20 rue Montorgueil');
+		assert.equal(res['description'], 'un petit appartement');
+		assert.equal(res['documents'], 'Attestation sécurité, ...');
+		assert.equal(res['nbRooms'], 2);
+		assert.equal(res['selling'], true);
+
+		assert.equal(await instance.getNbProperties(), 1);
 	});
 
 	/*it('Post, Count of properties should be 2', async () => {
@@ -42,4 +49,8 @@ contract('PropertyFactory', async function(accounts) {
 
 		console.log(await instance.getPropertiesIdsByOwner(accounts[1]));
 	});*/
+
+	it('Nb properties should be 0', async () => {
+		assert.equal(await instance.getNbProperties(), 0);
+	});
 });

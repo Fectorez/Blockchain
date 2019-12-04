@@ -5,6 +5,7 @@ function App() {
   var Web3 = require('web3');
   var contract = require('truffle-contract');
   var web3;
+  var deployedContract;
 
   if(typeof web3 !== 'undefined')
     web3 = new Web3(web3.currentProvider)
@@ -22,21 +23,47 @@ function App() {
   }*/
   console.log('SC', SC)
   console.log('account', web3.eth.accounts)
+
   async function postProperty() {
-    let deployedContract = await SC.deployed()
-    await deployedContract.post(1, 20, "20 rue Montorgueil", "un petit appartement", uuid(), 2, {from:web3.eth.accounts.givenProvider.selectedAddress, gas:30000000})
-      
-    }
+    deployedContract = await SC.deployed()
+    console.log('deployedContract',deployedContract)
+    console.log('posting...')
+    await deployedContract.post.call(1, 20, "20 rue Montorgueil", "un petit appartement", 'Attestation sécurité, ...', 2, {from:web3.eth.accounts.givenProvider.selectedAddress, gas:30000000})
+
+    var nb = await deployedContract.getNbProperties()
+
+    return nb
+  }
   
-    async function getPropertyById() {
+    /*async function getPropertyById() {
       console.log('entry')
       let deployedContract = await SC.deployed()
       let p=await deployedContract.properties.call(0)
       console.log('p',p)
         return p
+      }*/
+
+
+      async function getNbProperties() {
+        console.log('entry')
+        let deployedContract = await SC.deployed()
+        let nb=await deployedContract.getNbProperties()
+        console.log('nb',nb)
+        return nb
       }
-      console.log('>>>>')
-    postProperty().then( (resp) => console.log('resp=',resp))
+      console.log('>>>>momo')
+
+      // getNbProperties().then( resp => {
+      //   console.log('nb==',resp.toNumber())
+      // }, err => {
+      //   console.log('err',err)
+      // })
+      
+    postProperty().then( (resp) =>
+      console.log('resp=',resp.toNumber()),
+    err => 
+      console.log('err2',err)
+    )
 
   return (
     <div className="App">
