@@ -32,7 +32,7 @@ contract PropertyFactory {
 
     // achat d'une property
     function buy(uint256 _propertyId) external payable {
-        require(msg.value == properties[_propertyId].price); // vérif
+        require(msg.value == properties[_propertyId].price, "Erreur prix propriété"); // vérif
         propertyToOwner[_propertyId].transfer(msg.value); // transfert
         propertyToOwner[_propertyId] = msg.sender; // changement proprio
         properties[_propertyId].selling = false; // plus en vente
@@ -44,7 +44,7 @@ contract PropertyFactory {
     }
 
     // tous les ID des properties de sender
-    function getPropertiesIdsByOwner() external view returns(uint[] memory) {
+    /*function getPropertiesIdsByOwner() external view returns(uint[] memory) {
         uint[] memory result = new uint[](ownerPropertyCount[msg.sender]);
         uint counter = 0;
         for (uint i = 0; i < properties.length; i++) {
@@ -54,7 +54,7 @@ contract PropertyFactory {
             }
         }
         return result;
-    }
+    }*/
 
     function getNbProperties() external view returns (uint) {
         return properties.length;
