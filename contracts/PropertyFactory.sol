@@ -7,9 +7,9 @@ contract PropertyFactory {
         //uint256 id;
         uint256 price;
         uint256 size;
-        string geoAddress;
-        string description;
-        string documents;
+        bytes32 geoAddress;
+        bytes32 description;
+        bytes32 documents;
         uint256 nbRooms;
         bool selling;
     }
@@ -20,8 +20,8 @@ contract PropertyFactory {
     mapping (address => uint) ownerPropertyCount;
 
     // mettre en vente
-    function post(uint256 _price, uint256 _size, string calldata _geoAddress,
-                  string calldata _description, string calldata _documents, uint256 _nbRooms) external {
+    function post(uint256 _price, uint256 _size, bytes32 _geoAddress,
+                  bytes32 _description, bytes32 _documents, uint256 _nbRooms) external {
         //uint256 id = properties.length;
         //Property memory property = Property(id, _price, _size, _geoAddress, _description,_documents, _nbRooms, true);
         uint id = properties.push(Property(_price, _size, _geoAddress, _description,_documents, _nbRooms, true));

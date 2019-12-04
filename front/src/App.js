@@ -28,7 +28,14 @@ function App() {
     deployedContract = await SC.deployed()
     console.log('deployedContract',deployedContract)
     console.log('posting...')
-    await deployedContract.post.call(1, 20, "20 rue Montorgueil", "un petit appartement", 'Attestation sécurité, ...', 2, {from:web3.eth.accounts.givenProvider.selectedAddress, gas:30000000})
+    await deployedContract.post(
+      1,
+      20,
+      Web3.fromAscii("20 rue Montorgueil"),
+      Web3.fromAscii("un petit appartement"),
+      Web3.fromAscii('Attestation sécurité, ...'),
+      2,
+      {from:web3.eth.accounts.givenProvider.selectedAddress, gas:30000000})
 
     var nb = await deployedContract.getNbProperties()
 
