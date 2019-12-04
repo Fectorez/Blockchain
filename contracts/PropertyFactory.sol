@@ -24,7 +24,7 @@ contract PropertyFactory {
                   bytes32 _description, bytes32 _documents, uint256 _nbRooms) external {
         //uint256 id = properties.length;
         //Property memory property = Property(id, _price, _size, _geoAddress, _description,_documents, _nbRooms, true);
-        uint id = properties.push(Property(_price, _size, _geoAddress, _description,_documents, _nbRooms, true));
+        uint id = properties.push(Property(_price, _size, _geoAddress, _description,_documents, _nbRooms, true)) - 1;
         //properties.push(property);
         propertyToOwner[id] = msg.sender;
         ownerPropertyCount[msg.sender]++;

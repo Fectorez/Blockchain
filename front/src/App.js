@@ -31,11 +31,11 @@ function App() {
     await deployedContract.post(
       1,
       20,
-      Web3.fromAscii("20 rue Montorgueil"),
-      Web3.fromAscii("un petit appartement"),
-      Web3.fromAscii('Attestation sécurité, ...'),
+      Web3.utils.fromAscii("20 rue Montorgueil"),
+      Web3.utils.fromAscii("un petit appartement"),
+      Web3.utils.fromAscii('Attestation sécurité, ...'),
       2,
-      {from:web3.eth.accounts.givenProvider.selectedAddress, gas:30000000})
+      {from:web3.eth.accounts.givenProvider.selectedAddress})
 
     var nb = await deployedContract.getNbProperties()
 
@@ -60,11 +60,11 @@ function App() {
       }
       console.log('>>>>momo')
 
-      // getNbProperties().then( resp => {
-      //   console.log('nb==',resp.toNumber())
-      // }, err => {
-      //   console.log('err',err)
-      // })
+      getNbProperties().then( resp => {
+        console.log('nb==',resp.toNumber())
+      }, err => {
+        console.log('err',err)
+      })
       
     postProperty().then( (resp) =>
       console.log('resp=',resp.toNumber()),
