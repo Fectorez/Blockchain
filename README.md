@@ -26,8 +26,11 @@ truffle migrate --network ropsten
 
 
 # Adresse smart contract
-0x3b86351d554552CF0A808f293033956D7806746F
+rechercher  "address":  dans le contrat buildé
 la mettre dans ropsten.etherscan.io
 
 avant d'appeler le SC, dans metamask :
 paramètres > connections > connecter, puis rafraichir
+
+# après un pull
+copier le contrat buildé dans le src
