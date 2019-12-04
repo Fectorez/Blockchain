@@ -1,5 +1,5 @@
 pragma solidity ^0.5.8;
-pragma experimental ABIEncoderV2;
+// pragma experimental ABIEncoderV2;
 
 contract PropertyFactory {
 
@@ -7,9 +7,9 @@ contract PropertyFactory {
         //uint256 id;
         uint256 price;
         uint256 size;
-        bytes32 geoAddress;
-        bytes32 description;
-        bytes32 documents;
+        string geoAddress;
+        string description;
+        string documents;
         uint256 nbRooms;
         bool selling;
     }
@@ -20,8 +20,8 @@ contract PropertyFactory {
     mapping (address => uint) ownerPropertyCount;
 
     // mettre en vente
-    function post(uint256 _price, uint256 _size, bytes32 _geoAddress,
-                  bytes32 _description, bytes32 _documents, uint256 _nbRooms) external {
+    function post(uint256 _price, uint256 _size, string calldata _geoAddress,
+                  string calldata _description, string calldata _documents, uint256 _nbRooms) external {
         //uint256 id = properties.length;
         //Property memory property = Property(id, _price, _size, _geoAddress, _description,_documents, _nbRooms, true);
         uint id = properties.push(Property(_price, _size, _geoAddress, _description,_documents, _nbRooms, true)) - 1;
@@ -43,12 +43,12 @@ contract PropertyFactory {
         return propertyToOwner[_propertyId] == msg.sender;
     }
 
-    // tous les ID des properties de <_owner>
-    function getPropertiesIdsByOwner(address _owner) external view returns(uint[] memory) {
-        uint[] memory result = new uint[](ownerPropertyCount[_owner]);
+    // tous les ID des properties de sender
+    function getPropertiesIdsByOwner() external view returns(uint[] memory) {
+        uint[] memory result = new uint[](ownerPropertyCount[msg.sender]);
         uint counter = 0;
         for (uint i = 0; i < properties.length; i++) {
-            if (propertyToOwner[i] == _owner) {
+            if (propertyToOwner[i] == msg.sender) {
                 result[counter] = i;
                 counter++;
             }

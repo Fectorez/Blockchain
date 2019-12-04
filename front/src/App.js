@@ -42,13 +42,14 @@ function App() {
     return nb
   }
   
-    /*async function getPropertyById() {
+    async function getPropertyById() {
       console.log('entry')
       let deployedContract = await SC.deployed()
       let p=await deployedContract.properties.call(0)
-      console.log('p',p)
-        return p
-      }*/
+      console.log('p>>',p)
+      return p
+    }
+    getPropertyById().then(resp => console.log('resp3=',resp))
 
 
       async function getNbProperties() {
