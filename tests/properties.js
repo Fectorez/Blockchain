@@ -1,12 +1,15 @@
 const PropertyFactory = artifacts.require('./PropertyFactory.sol');
 const assert = require('assert');
-const uuid = require('uuid');
-
-var a1 = [1, 20, "20 rue Montorgueil", "un petit appartement", uuid(), 2];
-var a2 = [1, 40, "10 rue du Caire", "un charmant appartement", uuid(), 2];
 
 contract('PropertyFactory', async function(accounts) {
 	var instance;
+
+	const price = 1;
+	const size = 20;
+	const geoAddress = '20 rue Montorgueil';
+	const description = 'un petit appartement';
+	const documents = 'Attestation sécurité, ...';
+	const rooms = 2
 
 	beforeEach('Init', async () => {
 		instance = await PropertyFactory.deployed();
@@ -22,19 +25,36 @@ contract('PropertyFactory', async function(accounts) {
 	});*/
 	
 	it('Post, result should be equal than posted info', async () => {
-		await instance.post(1, 20, "20 rue Montorgueil", "un petit appartement", 'Attestation sécurité, ...', 2);
+		await instance.post(price, size, geoAddress, description, documents, rooms);
 
 		var res = await instance.properties.call(0);
 
-		assert.equal(res['price'], 1);
-		assert.equal(res['size'], 20);
-		assert.equal(res['geoAddress'], '20 rue Montorgueil');
-		assert.equal(res['description'], 'un petit appartement');
-		assert.equal(res['documents'], 'Attestation sécurité, ...');
-		assert.equal(res['nbRooms'], 2);
+		assert.equal(res['price'], price);
+		assert.equal(res['size'], size);
+		assert.equal(res['geoAddress'], geoAddress);
+		assert.equal(res['description'], description);
+		assert.equal(res['documents'], documents);
+		assert.equal(res['nbRooms'], rooms);
 		assert.equal(res['selling'], true);
 
 		assert.equal(await instance.getNbProperties(), 1);
+	});
+
+	it('Get, result should be equal than posted info', async () => {
+		await instance.post(price, size, geoAddress, description, documents, rooms);
+		await instance.post(price, size, geoAddress, description, documents, rooms);
+
+		var res = await instance.properties.call(1);
+
+		assert.equal(res['price'], price);
+		assert.equal(res['size'], size);
+		assert.equal(res['geoAddress'], geoAddress);
+		assert.equal(res['description'], description);
+		assert.equal(res['documents'], documents);
+		assert.equal(res['nbRooms'], rooms);
+		assert.equal(res['selling'], true);
+
+		assert.equal(await instance.getNbProperties(), 2);
 	});
 
 	/*it('Post, Count of properties should be 2', async () => {
@@ -44,11 +64,11 @@ contract('PropertyFactory', async function(accounts) {
 		assert.equal(await instance.getNbProperties(), 2);
 	});
 */
-	/*it('Should be my property', async () => {
-		await instance.post(1, 50, "10 rue du Caire", "un bel appart", uuid(), 3);
+	it('Should be my property', async () => {
+		await instance.post(price, size, geoAddress, description, description, rooms);
 
-		console.log(await instance.getPropertiesIdsByOwner(accounts[1]));
-	});*/
+		assert.equal(await instance.isMyProperty(0), true);
+	});
 
 	it('Nb properties should be 0', async () => {
 		assert.equal(await instance.getNbProperties(), 0);
