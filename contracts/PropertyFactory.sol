@@ -4,7 +4,6 @@ pragma solidity ^0.5.8;
 contract PropertyFactory {
 
     struct Property {
-        //uint256 id;
         uint256 price;
         uint256 size;
         string geoAddress;
@@ -12,35 +11,37 @@ contract PropertyFactory {
         string documents;
         uint256 nbRooms;
         bool selling;
+        address payable owner;
     }
 
     Property[] public properties;
 
-    mapping (uint => address payable) public propertyToOwner;
-    mapping (address => uint) ownerPropertyCount;
-
-    // mettre en vente
+    // mettre en vente (non adapté de renvoyer un objet)
     function post(uint256 _price, uint256 _size, string calldata _geoAddress,
-                  string calldata _description, string calldata _documents, uint256 _nbRooms) external {
-        //uint256 id = properties.length;
-        //Property memory property = Property(id, _price, _size, _geoAddress, _description,_documents, _nbRooms, true);
-        uint id = properties.push(Property(_price, _size, _geoAddress, _description,_documents, _nbRooms, true)) - 1;
-        //properties.push(property);
-        propertyToOwner[id] = msg.sender;
-        ownerPropertyCount[msg.sender]++;
+                  string calldata _description, string calldata _documents, uint256 _nbRooms) external returns (uint) {
+        properties.push(Property(
+            _price,
+            _size,
+            _geoAddress,
+            _description,
+            _documents,
+            _nbRooms,
+            true,
+            msg.sender
+        ));
     }
 
     // achat d'une property
     function buy(uint256 _propertyId) external payable {
         require(msg.value == properties[_propertyId].price, "Erreur prix propriété"); // vérif
-        propertyToOwner[_propertyId].transfer(msg.value); // transfert
-        propertyToOwner[_propertyId] = msg.sender; // changement proprio
+        properties[_propertyId].owner.transfer(msg.value); // transfert
+        properties[_propertyId].owner = msg.sender; // changement proprio
         properties[_propertyId].selling = false; // plus en vente
     }
 
     // propr. de sender ?
     function isMyProperty(uint256 _propertyId) external view returns (bool) {
-        return propertyToOwner[_propertyId] == msg.sender;
+        return properties[_propertyId].owner == msg.sender;
     }
 
     // tous les ID des properties de sender
@@ -65,7 +66,7 @@ contract PropertyFactory {
         Property[] memory availableProperties;
 
 		uint j = 0;
-        
+
         for ( uint i = 0 ; i < properties.length ; i++ ) {
             if (availableProperties[i].selling) {
                 availableProperties[j] = properties[i];

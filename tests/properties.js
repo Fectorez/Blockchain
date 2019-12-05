@@ -17,14 +17,16 @@ contract('PropertyFactory', async function(accounts) {
 		await instance.clearAllProperties();
 	});
 
-	/*it('Count of properties should be 0', async () => {
-		const properties = await instance.properties.call();
-		console.log(properties);
+	it('Just post', async () => {
+		await instance.post.call(price, size, geoAddress, description, documents, rooms);
+	});
 
-		assert.equal(properties.length, 0);
-	});*/
+	it('Post, nb properties should be 1', async () => {
+		await instance.post(price, size, geoAddress, description, documents, rooms);
+		assert.equal(await instance.getNbProperties(), 1);
+	});
 	
-	it('Post, result should be equal than posted info', async () => {
+	it('Post, id should be 0 & result should be equal than posted info', async () => {
 		await instance.post(price, size, geoAddress, description, documents, rooms);
 
 		var res = await instance.properties.call(0);
@@ -36,34 +38,25 @@ contract('PropertyFactory', async function(accounts) {
 		assert.equal(res['documents'], documents);
 		assert.equal(res['nbRooms'], rooms);
 		assert.equal(res['selling'], true);
-
-		assert.equal(await instance.getNbProperties(), 1);
 	});
 
-	it('Get, result should be equal than posted info', async () => {
+	it('2 Post, 2nd result should be equal than posted info, nb properties should be 2', async () => {
 		await instance.post(price, size, geoAddress, description, documents, rooms);
-		await instance.post(price, size, geoAddress, description, documents, rooms);
+		await instance.post(price+100, size+10, geoAddress, description, documents, rooms+1);
 
 		var res = await instance.properties.call(1);
 
-		assert.equal(res['price'], price);
-		assert.equal(res['size'], size);
+		assert.equal(res['price'], price+100);
+		assert.equal(res['size'], size+10);
 		assert.equal(res['geoAddress'], geoAddress);
 		assert.equal(res['description'], description);
 		assert.equal(res['documents'], documents);
-		assert.equal(res['nbRooms'], rooms);
+		assert.equal(res['nbRooms'], rooms+1);
 		assert.equal(res['selling'], true);
 
 		assert.equal(await instance.getNbProperties(), 2);
 	});
 
-	/*it('Post, Count of properties should be 2', async () => {
-		await instance.post(a1[0], a1[1], a1[2], a1[3], a1[4], a1[5]);
-		await instance.post(a2[0], a2[1], a2[2], a2[3], a2[4], a2[5]);
-		
-		assert.equal(await instance.getNbProperties(), 2);
-	});
-*/
 	it('Should be my property', async () => {
 		await instance.post(price, size, geoAddress, description, description, rooms);
 
