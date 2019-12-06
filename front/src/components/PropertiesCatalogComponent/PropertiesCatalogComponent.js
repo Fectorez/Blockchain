@@ -27,7 +27,6 @@ export default class PropertiesCatalogComponent extends Component {
     }
 
     async getNbProperties() {
-        let { properties } = this.state
         deployedContract = await SC.deployed()
         let nbProperties = await deployedContract.getNbProperties()
 
