@@ -47,9 +47,28 @@ export default class PropertiesCatalogComponent extends Component {
     render() {
         const { nbProperties } = this.state
         return (
-            <div>
+            <div className='PropertiesCatalog'>
                 <p>Nombre de propriétés : { nbProperties }</p>
             </div>
         )
     }
 }
+
+
+//   async function postProperty() {
+//     deployedContract = await SC.deployed()
+//     console.log('deployedContract',deployedContract)
+//     console.log('posting...')
+//     await deployedContract.post(
+//       1,
+//       20,
+//       Web3.utils.fromAscii("20 rue Montorgueil"),
+//       Web3.utils.fromAscii("un petit appartement"),
+//       Web3.utils.fromAscii('Attestation sécurité, ...'),
+//       2,
+//       {from:web3.eth.accounts.givenProvider.selectedAddress})
+
+//     var nb = await deployedContract.getNbProperties()
+
+//     return nb
+//   }
