@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropertyCardComponent from '../PropertyCardComponent/PropertyCardComponent.js'
 
 let Web3 = require('web3');
 let contract = require('truffle-contract');
@@ -49,6 +50,10 @@ export default class PropertiesCatalogComponent extends Component {
         return (
             <div className='PropertiesCatalog'>
                 <p>Nombre de propriétés : { nbProperties }</p>
+                <PropertyCardComponent />
+                <PropertyCardComponent />
+                <PropertyCardComponent />
+                <PropertyCardComponent />
             </div>
         )
     }

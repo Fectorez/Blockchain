@@ -1,0 +1,13 @@
+.PropertyCardComponent {
+    margin: auto;
+    margin-bottom: 10px;
+    text-align: center;
+    width: 35%;
+    height: 35%;
+    border: 1px solid black;
+}
+
+.logoToSell {
+    width: 100px;
+    height: 100px;
+}
