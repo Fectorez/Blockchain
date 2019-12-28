@@ -23,7 +23,7 @@ try {
     alert('Veuillez vous connecter via MetaMask')
 }
 
-export default class PropertiesCatalogComponent extends Component {
+export default class MyPropertiesComponent extends Component {
     constructor() {
         super();
 
@@ -43,17 +43,12 @@ export default class PropertiesCatalogComponent extends Component {
 
         for (let i = 0; i < nbProperties; i++) {
             let property = await this.getPropertyById(i)
-            console.log('Property n° ' + i + ' : ', property)
-            if (property.selling && !this.isMyProperty(property)) {
+            if (this.isMyProperty(property)) {
                 this.state.properties.push(property)
             }
         }
 
         this.setState({ nbProperties: nbProperties.toNumber() })
-    }
-
-    isMyProperty(p) {
-        return p.owner.toLowerCase() === web3.eth.accounts.givenProvider.selectedAddress.toLowerCase()
     }
 
     async getPropertyById(id) {
@@ -62,13 +57,17 @@ export default class PropertiesCatalogComponent extends Component {
         return makeReadable(property)
     }
 
+    isMyProperty(p) {
+        return p.owner.toLowerCase() === web3.eth.accounts.givenProvider.selectedAddress.toLowerCase()
+    }
+
     render() {
         const { nbProperties, properties } = this.state
 
         return (
             <div className='PropertiesCatalog'>
                 <p>Nombre de propriétés : { nbProperties }</p>
-                {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={true} key={i}/>)
+                {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={false} key={i}/>)
                 }
             </div>
         )

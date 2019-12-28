@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import PropertiesCatalogComponent from './components/PropertiesCatalogComponent/PropertiesCatalogComponent.js'
+import MyPropertiesComponent from './components/MyPropertiesComponent/MyPropertiesComponent.js'
 import * as serviceWorker from './serviceWorker';
 
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
@@ -10,6 +11,7 @@ const Root = () => (
   <Router>
     <Switch>
       <Route exact path='/' component={ PropertiesCatalogComponent } />
+      <Route exact path='/my-properties' component={ MyPropertiesComponent } />
     </Switch>
   </Router>
 )
