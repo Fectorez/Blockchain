@@ -45,6 +45,7 @@ export default class PropertiesCatalogComponent extends Component {
             let property = await this.getPropertyById(i)
             console.log('Property n° ' + i + ' : ', property)
             if (property.selling && !this.isMyProperty(property)) {
+                property.id = i
                 this.state.properties.push(property)
             }
         }
@@ -68,8 +69,10 @@ export default class PropertiesCatalogComponent extends Component {
         return (
             <div className='PropertiesCatalog'>
                 <p>Nombre de propriétés : { nbProperties }</p>
-                {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={true} key={i}/>)
-                }
+                {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={true} key={i}/>)}
+                <div>
+                    <a href="/my-properties">Mes propriétés</a>
+                </div>
             </div>
         )
     }

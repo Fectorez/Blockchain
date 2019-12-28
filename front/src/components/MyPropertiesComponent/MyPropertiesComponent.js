@@ -44,6 +44,7 @@ export default class MyPropertiesComponent extends Component {
         for (let i = 0; i < nbProperties; i++) {
             let property = await this.getPropertyById(i)
             if (this.isMyProperty(property)) {
+                property.id = i
                 this.state.properties.push(property)
             }
         }
@@ -67,8 +68,10 @@ export default class MyPropertiesComponent extends Component {
         return (
             <div className='PropertiesCatalog'>
                 <p>Nombre de propriétés : { nbProperties }</p>
-                {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={false} key={i}/>)
-                }
+                {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={false} key={i}/>)}
+                <div>
+                    <a href="/">Catalogue</a>
+                </div>
             </div>
         )
     }
