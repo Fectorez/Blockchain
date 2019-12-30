@@ -66,11 +66,14 @@ export default class MyPropertiesComponent extends Component {
         const { nbProperties, properties } = this.state
 
         return (
-            <div className='PropertiesCatalog'>
-                <p>Nombre de propriétés : { nbProperties }</p>
+            <div className='MyProperties'>
+                <h1>Mes propriétés</h1>
+                <p>Propriétés : { nbProperties }</p>
+                <p>À moi : { properties.length }</p>
                 {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={false} key={i}/>)}
                 <div>
                     <a href="/">Catalogue</a>
+                    <a href="/post-property">Mettre en vente une propriété</a>
                 </div>
             </div>
         )

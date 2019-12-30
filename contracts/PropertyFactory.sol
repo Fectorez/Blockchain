@@ -4,7 +4,7 @@ pragma solidity ^0.5.8;
 contract PropertyFactory {
 
     struct Property {
-        uint256 price;
+        uint256 price; // en wei
         uint256 size;
         string geoAddress;
         string description;

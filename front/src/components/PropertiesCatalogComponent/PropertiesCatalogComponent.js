@@ -68,10 +68,13 @@ export default class PropertiesCatalogComponent extends Component {
 
         return (
             <div className='PropertiesCatalog'>
-                <p>Nombre de propriétés : { nbProperties }</p>
+                <h1>Catalogue</h1>
+                <p>Propriétés : { nbProperties }</p>
+                <p>À vendre : { properties.length}</p>
                 {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={true} key={i}/>)}
                 <div>
                     <a href="/my-properties">Mes propriétés</a>
+                    <a href="/post-property">Mettre en vente une propriété</a>
                 </div>
             </div>
         )

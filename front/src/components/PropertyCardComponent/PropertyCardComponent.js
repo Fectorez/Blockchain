@@ -29,8 +29,10 @@ export default class PropertyCardComponent extends Component {
         deployedContract = await SC.deployed()
         const id = this.state.property.id
         const from = web3.eth.accounts.givenProvider.selectedAddress
-        const value = web3.utils.toWei(this.state.property.price.toString(), "ether") // MARCHE PAS
-        await deployedContract.buy(id, {from: from, value: value}) // MARCHE PAS
+        const value = web3.utils.toWei(this.state.property.price.toString(), "ether")
+        console.log('price : ', this.state.property.price.toString(), ' ETH ==', value, ' wei')
+        console.log(`await deployedContract.buy(${id}, {from: ${from}, value: ${value})`) // MARCHE PAS
+        await deployedContract.buy(id, {from: from, value: 3}) // MARCHE PAS
         window.location.href = '/my-properties'
     }
 

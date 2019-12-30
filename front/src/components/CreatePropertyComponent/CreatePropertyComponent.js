@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import PropertyCardComponent from '../PropertyCardComponent/PropertyCardComponent.js'
-import { makeReadable } from '../../utils'
 
 let Web3 = require('web3');
 let contract = require('truffle-contract');
@@ -28,35 +26,68 @@ export default class CreatePropertyComponent extends Component {
         super();
 
         this.state = {
+            description: '',
+            price: '',
+            geoAddress: '',
+            size: '',
+            nbRooms: '',
+            documents: ''
         }
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    componentDidMount() {
+    handleChange(event) {
+        this.setState({[event.target.name]: event.target.value});
     }
 
-    async postProperty() {
+    async handleSubmit(event) {
+        event.preventDefault();
         deployedContract = await SC.deployed()
-        console.log('deployedContract',deployedContract)
-        console.log('posting...')
         await deployedContract.post(
-          1,
-          20,
-          Web3.utils.fromAscii("20 rue Montorgueil"),
-          Web3.utils.fromAscii("un petit appartement"),
-          Web3.utils.fromAscii('Attestation sécurité, ...'),
-          2,
-          {from:web3.eth.accounts.givenProvider.selectedAddress})
-    
-        var nb = await deployedContract.getNbProperties()
-    
-        return nb
+            this.state.price,
+            this.state.size,
+            Web3.utils.fromAscii(this.state.geoAddress),
+            Web3.utils.fromAscii(this.state.description),
+            Web3.utils.fromAscii(this.state.documents),
+            this.state.nbRooms,
+            {from:web3.eth.accounts.givenProvider.selectedAddress}
+        )
+        window.location.href = '/my-properties'
     }
 
     render() {
-        const { } = this.state
-
         return (
-            <div className='PropertiesCatalog'>
+            <div className='CreateProperty'>
+                <h1>Poster une propriété</h1>
+                <form onSubmit={this.handleSubmit}>
+                    <label>
+                        Description :
+                        <input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Prix (en wei):
+                        <input type="text" name="price" value={this.state.price} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Adresse :
+                        <input type="text" name="geoAddress" value={this.state.geoAddress} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Surface :
+                        <input type="text" name="size" value={this.state.size} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Nombre de pièces :
+                        <input type="text" name="nbRooms" value={this.state.nbRooms} onChange={this.handleChange} />
+                    </label>
+                    <label>
+                        Documents :
+                        <input type="text" name="documents" value={this.state.documents} onChange={this.handleChange} />
+                    </label>
+                    <input type="submit" value="Envoyer" />
+                </form>
             </div>
         )
     }
