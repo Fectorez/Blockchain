@@ -13,8 +13,11 @@ contract('PropertyFactory', async function(accounts) {
 
 	beforeEach('Init', async () => {
 		instance = await PropertyFactory.deployed();
-		
 		await instance.clearAllProperties();
+	});
+
+	it('Nb properties should be 0', async () => {
+		assert.equal(await instance.getNbProperties(), 0);
 	});
 
 	it('Just post', async () => {
@@ -40,7 +43,7 @@ contract('PropertyFactory', async function(accounts) {
 		assert.equal(res['selling'], true);
 	});
 
-	it('2 Post, 2nd result should be equal than posted info, nb properties should be 2', async () => {
+	it('2 Posts, 2nd result should be equal than posted info, nb properties should be 2', async () => {
 		await instance.post(price, size, geoAddress, description, documents, rooms);
 		await instance.post(price+100, size+10, geoAddress, description, documents, rooms+1);
 
@@ -57,13 +60,11 @@ contract('PropertyFactory', async function(accounts) {
 		assert.equal(await instance.getNbProperties(), 2);
 	});
 
-	it('Should be my property', async () => {
+	it('Post, price should be set, then buy', async () => {
 		await instance.post(price, size, geoAddress, description, description, rooms);
+		var res = await instance.properties.call(0);
+		assert.equal(res['price'], price);
 
-		assert.equal(await instance.isMyProperty(0), true);
-	});
-
-	it('Nb properties should be 0', async () => {
-		assert.equal(await instance.getNbProperties(), 0);
+		await instance.buy(0, {from: accounts[1], value: price})
 	});
 });
