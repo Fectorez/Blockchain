@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropertyCardComponent from '../PropertyCardComponent/PropertyCardComponent.js'
 import { makeReadable } from '../../utils'
+import './MyPropertiesComponent.css'
 
 let Web3 = require('web3');
 let contract = require('truffle-contract');
@@ -67,14 +68,14 @@ export default class MyPropertiesComponent extends Component {
 
         return (
             <div className='MyProperties'>
-                <h1>Mes propriétés</h1>
-                <p>Propriétés : { nbProperties }</p>
-                <p>À moi : { properties.length }</p>
-                {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={false} key={i}/>)}
-                <div>
-                    <a href="/">Catalogue</a>
-                    <a href="/post-property">Mettre en vente une propriété</a>
+                <div className='menu'>
+                    <a className="menu-item" href="/">Catalog des propriétés</a>
+                    <a className="menu-item" href="/my-properties">Mes propriétés en vente</a>
+                    <a className="menu-item" href="/post-property">Mettre en vente une propriété</a>
                 </div>
+                <center><h1>Liste de mes propriétés en vente : </h1></center>
+                <center><i>Vous avez {properties.length} propriété(s) en vente</i></center>
+                {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={false} key={i}/>)}
             </div>
         )
     }

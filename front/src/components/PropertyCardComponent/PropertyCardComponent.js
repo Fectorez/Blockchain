@@ -44,13 +44,10 @@ export default class PropertyCardComponent extends Component {
             <div className='PropertyCardComponent'>
                 <h1>{obj.description}</h1>
                 <center><img className='logoToSell' src={ logoToSell } alt="Maison à vendre" /></center>
-                <ul>
-                    <li>Adresse : {obj.geoAddress}</li>
-                    <li>Surface : {obj.size}</li>
-                    <li>Pièces : {obj.nbRooms}</li>
-                    <li>Prix : {obj.price} ETH</li>
-                    <li>Documents : {obj.documents}</li>
-                </ul>
+                    <p><span className='fas fa-map-marker-alt' />  {obj.geoAddress}</p>
+                    <p><span className='fas fa-home' />  {obj.size}m² - {obj.nbRooms} pièce(s)</p>
+                    <p><span className='fas fa-dollar-sign' />  {obj.price} ETH</p>
+                    <p><span className='fas fa-file' />  {obj.documents}</p>
                 {fromCatalog ? <button type="button" onClick={this.buyProperty}>Acheter</button> : null}
             </div>
         )

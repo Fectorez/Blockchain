@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import './CreatePropertyComponent.css'
 
 let Web3 = require('web3');
 let contract = require('truffle-contract');
@@ -60,34 +61,36 @@ export default class CreatePropertyComponent extends Component {
     render() {
         return (
             <div className='CreateProperty'>
-                <h1>Poster une propriété</h1>
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Description :
-                        <input type="text" name="description" value={this.state.description} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Prix (en wei):
-                        <input type="text" name="price" value={this.state.price} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Adresse :
-                        <input type="text" name="geoAddress" value={this.state.geoAddress} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Surface :
-                        <input type="text" name="size" value={this.state.size} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Nombre de pièces :
-                        <input type="text" name="nbRooms" value={this.state.nbRooms} onChange={this.handleChange} />
-                    </label>
-                    <label>
-                        Documents :
-                        <input type="text" name="documents" value={this.state.documents} onChange={this.handleChange} />
-                    </label>
-                    <input type="submit" value="Envoyer" />
-                </form>
+                <div className='menu'>
+                    <a className="menu-item" href="/">Catalog des propriétés</a>
+                    <a className="menu-item" href="/my-properties">Mes propriétés en vente</a>
+                    <a className="menu-item" href="/post-property">Mettre en vente une propriété</a>
+                </div>
+                <center><h1>Mise en vente d'une propriété</h1></center>
+                <center><i>Veuillez remplir le formulaire suivant</i></center>
+                <center><div className='form-post'>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className='form-item'>
+                            <input type="text" placeholder="Description" name="description" value={this.state.description} onChange={this.handleChange} required/>
+                        </div>
+                        <div className='form-item'>
+                            <input type="number" placeholder="Prix (en WEI)" step="0.1" name="price" value={this.state.price} onChange={this.handleChange} required/>
+                        </div>
+                        <div className='form-item'>
+                            <input type="text" placeholder="Adresse" name="geoAddress" value={this.state.geoAddress} onChange={this.handleChange} required/>
+                        </div>
+                        <div className='form-item'>
+                            <input type="number" placeholder="Surface (en m²)" step="0.5" name="size" value={this.state.size} onChange={this.handleChange} required/>
+                        </div>
+                        <div className='form-item'>
+                            <input type="number" placeholder="Nombre de pièces" step="1" name="nbRooms" value={this.state.nbRooms} onChange={this.handleChange} required/>
+                        </div>
+                        <div className='form-item'>
+                            <input type="text" placeholder="Documents à fournir" name="documents" value={this.state.documents} onChange={this.handleChange} required/>
+                        </div>
+                        <input className='form-validation' type="submit" value="Valider la mise en vente du bien" />
+                    </form>
+                </div></center>
             </div>
         )
     }
