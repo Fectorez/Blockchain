@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import NotConnected from '../NotConnected/NotConnected.js'
 import './CreatePropertyComponent.css'
 
 let Web3 = require('web3');
@@ -14,19 +15,12 @@ let SC_artifacts = require('../../PropertyFactory.json')
 let SC = contract(SC_artifacts)
 SC.setProvider(web3.currentProvider)
 
-try {
-    if (!web3.eth.accounts.givenProvider.selectedAddress) {
-        alert('Veuillez vous connecter via MetaMask')
-    }
-} catch(e) {
-    alert('Veuillez vous connecter via MetaMask')
-}
-
 export default class CreatePropertyComponent extends Component {
     constructor() {
         super();
 
         this.state = {
+            isConnected: true,
             description: '',
             price: '',
             geoAddress: '',
@@ -37,6 +31,26 @@ export default class CreatePropertyComponent extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    componentDidMount() {
+        localStorage.setItem('MetaMask', null)
+        setTimeout(() => {
+            this.checkMetamask()
+        }, 100);
+    }
+
+    checkMetamask = () => {
+        if (web3.eth.accounts.givenProvider.selectedAddress) {
+            localStorage.setItem('MetaMask', web3.eth.accounts.givenProvider.selectedAddress)
+            this.setState({ isConnected: true })
+            return true
+        }
+        else {
+            localStorage.setItem('MetaMask', null)
+            this.setState({ isConnected: false })
+            return false
+        }
     }
 
     handleChange(event) {
@@ -59,10 +73,12 @@ export default class CreatePropertyComponent extends Component {
     }
 
     render() {
+        const { isConnected } = this.state
         return (
+            isConnected ? 
             <div className='CreateProperty'>
                 <div className='menu'>
-                    <a className="menu-item" href="/">Catalog des propriétés</a>
+                    <a className="menu-item" href="/">Catalogue des propriétés</a>
                     <a className="menu-item" href="/my-properties">Mes propriétés en vente</a>
                     <a className="menu-item" href="/post-property">Mettre en vente une propriété</a>
                 </div>
@@ -91,7 +107,8 @@ export default class CreatePropertyComponent extends Component {
                         <input className='form-validation' type="submit" value="Valider la mise en vente du bien" />
                     </form>
                 </div></center>
-            </div>
+            </div> :
+            <NotConnected />
         )
     }
 }

@@ -30,8 +30,6 @@ export default class PropertyCardComponent extends Component {
         const id = this.state.property.id
         const from = web3.eth.accounts.givenProvider.selectedAddress
         const value = web3.utils.toWei(this.state.property.price.toString(), "ether")
-        console.log('price : ', this.state.property.price.toString(), ' ETH ==', value, ' wei')
-        console.log(`await deployedContract.buy(${id}, {from: ${from}, value: ${value})`) // MARCHE PAS
         await deployedContract.buy(id, {from: from, value: 3}) // MARCHE PAS
         window.location.href = '/my-properties'
     }
@@ -48,7 +46,7 @@ export default class PropertyCardComponent extends Component {
                     <p><span className='fas fa-home' />  {obj.size}m² - {obj.nbRooms} pièce(s)</p>
                     <p><span className='fas fa-dollar-sign' />  {obj.price} ETH</p>
                     <p><span className='fas fa-file' />  {obj.documents}</p>
-                {fromCatalog ? <button type="button" onClick={this.buyProperty}>Acheter</button> : null}
+                {fromCatalog ? <button className="buyProperty" type="button" onClick={this.buyProperty}>Acheter la propriété</button> : null}
             </div>
         )
     }
