@@ -29,8 +29,8 @@ export default class PropertyCardComponent extends Component {
         deployedContract = await SC.deployed()
         const id = this.state.property.id
         const from = web3.eth.accounts.givenProvider.selectedAddress
-        const value = web3.utils.toWei(this.state.property.price.toString(), "ether")
-        await deployedContract.buy(id, {from: from, value: 3}) // MARCHE PAS
+        const value = this.state.property.price.toString()
+        await deployedContract.buy(id, {from: from, value: value})
         window.location.href = '/my-properties'
     }
 
@@ -44,7 +44,7 @@ export default class PropertyCardComponent extends Component {
                 <center><img className='logoToSell' src={ logoToSell } alt="Maison à vendre" /></center>
                     <p><span className='fas fa-map-marker-alt' />  {obj.geoAddress}</p>
                     <p><span className='fas fa-home' />  {obj.size}m² - {obj.nbRooms} pièce(s)</p>
-                    <p><span className='fas fa-dollar-sign' />  {obj.price} ETH</p>
+                    <p><span className='fas fa-dollar-sign' />  {obj.price} wei</p>
                     <p><span className='fas fa-file' />  {obj.documents}</p>
                 {fromCatalog ? <button className="buyProperty" type="button" onClick={this.buyProperty}>Acheter la propriété</button> : null}
             </div>
