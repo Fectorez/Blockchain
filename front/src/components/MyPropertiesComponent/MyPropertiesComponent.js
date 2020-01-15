@@ -80,17 +80,34 @@ export default class MyPropertiesComponent extends Component {
     render() {
         const { isConnected, nbProperties, properties } = this.state
 
+        let sellingProperties = properties.filter((property) => {
+            return property.selling
+        })
+
+        let purchasedProperties = properties.filter((property) => {
+            return !property.selling
+        })
+
         return (
             isConnected ?
             <div className='MyProperties'>
                 <div className='menu'>
                     <a className="menu-item" href="/">Catalogue des propriétés</a>
-                    <a className="menu-item" href="/my-properties">Mes propriétés en vente</a>
+                    <a className="menu-item" href="/my-properties">Mes propriétés</a>
                     <a className="menu-item" href="/post-property">Mettre en vente une propriété</a>
                 </div>
-                <center><h1>Liste de mes propriétés en vente : </h1></center>
-                <center><i>Vous avez {properties.length} propriété(s) en vente</i></center>
-                {properties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={false} key={i}/>)}
+                <center><h1>Liste de mes propriétés : </h1></center>
+                <div className='properties'>
+                    <div>
+                        <center><i>Vous avez {sellingProperties.length} propriété(s) en vente</i></center>
+                        {sellingProperties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={false} key={i}/>)}
+                    </div>
+                    <hr/>
+                    <div>
+                        <center><i>Vous avez acheté {purchasedProperties.length} propriété(s)</i></center>
+                        {purchasedProperties.map((obj, i) => <PropertyCardComponent property={obj} fromCatalog={false} key={i}/>)}
+                    </div>
+                </div>
             </div> :
             <NotConnected />
         )

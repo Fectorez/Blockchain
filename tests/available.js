@@ -15,7 +15,6 @@ contract('PropertyFactory', async function(accounts) {
 		await instance.clearAllProperties();
 
 		var properties = await instance.getAvailableHouses();
-		console.log(properties);
 
 		assert.equal(properties.length, 0);
 	});

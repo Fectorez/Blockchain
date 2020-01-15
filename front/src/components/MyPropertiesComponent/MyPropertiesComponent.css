@@ -15,3 +15,14 @@
 a {
     text-decoration: none;
 }
+
+.properties {
+    display: grid;
+}
+
+hr {
+    height: 1px;
+    border: none;
+    background-color: black;
+    width: 75%;
+}

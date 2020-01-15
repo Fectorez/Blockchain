@@ -56,7 +56,6 @@ export default class PropertiesCatalogComponent extends Component {
 
             for (let i = 0; i < nbProperties; i++) {
                 let property = await this.getPropertyById(i)
-                console.log('Property n° ' + i + ' : ', property)
                 if (property.selling && !this.isMyProperty(property)) {
                     property.id = i
                     this.state.properties.push(property)
@@ -85,7 +84,7 @@ export default class PropertiesCatalogComponent extends Component {
                 <div className='PropertiesCatalog'>
                     <div className='menu'>
                         <a className="menu-item" href="/">Catalogue des propriétés</a>
-                        <a className="menu-item" href="/my-properties">Mes propriétés en vente</a>
+                        <a className="menu-item" href="/my-properties">Mes propriétés</a>
                         <a className="menu-item" href="/post-property">Mettre en vente une propriété</a>
                     </div>
                     <center><h1>Catalogue des propriétés</h1></center>

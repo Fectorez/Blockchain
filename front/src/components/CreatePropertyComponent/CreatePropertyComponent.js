@@ -79,7 +79,7 @@ export default class CreatePropertyComponent extends Component {
             <div className='CreateProperty'>
                 <div className='menu'>
                     <a className="menu-item" href="/">Catalogue des propriétés</a>
-                    <a className="menu-item" href="/my-properties">Mes propriétés en vente</a>
+                    <a className="menu-item" href="/my-properties">Mes propriétés</a>
                     <a className="menu-item" href="/post-property">Mettre en vente une propriété</a>
                 </div>
                 <center><h1>Mise en vente d'une propriété</h1></center>

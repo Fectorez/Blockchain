@@ -6,6 +6,7 @@
     width: 30%;
     height: 30%;
     border: 1px solid black;
+    border-radius: 10px;
 }
 .PropertyCardComponent:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.8);
